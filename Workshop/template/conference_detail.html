@@ -1,0 +1,40 @@
+<h2>Détails de la conférence</h2>
+<div class="detail-container">
+    <h3>{{ conference.name }}</h3>
+    <p><strong>Date début :</strong> {{ conference.start_date }}</p>
+    <p><strong>Date fin :</strong> {{ conference.end_date }}</p>
+    <p><strong>Description :</strong> {{ conference.description }}</p>
+    <a href="{% url 'conference_liste' %}" class="back-btn">Retour à la liste</a>
+</div>
+<style>
+.detail-container {
+    background: #fff;
+    max-width: 500px;
+    margin: 40px auto;
+    padding: 32px 28px;
+    border-radius: 12px;
+    box-shadow: 0 4px 24px rgba(44,62,80,0.10);
+    color: #2d3a4b;
+    font-size: 1.1em;
+}
+.detail-container h3 {
+    color: #4f8cff;
+    margin-bottom: 18px;
+}
+.back-btn {
+    display: inline-block;
+    margin-top: 18px;
+    background: #4f8cff;
+    color: #fff;
+    padding: 7px 18px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 500;
+    box-shadow: 0 2px 8px rgba(44,62,80,0.08);
+    transition: background 0.2s, transform 0.2s;
+}
+.back-btn:hover {
+    background: #2d3a4b;
+    transform: scale(1.07);
+}
+</style>
