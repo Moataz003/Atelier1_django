@@ -1,0 +1,37 @@
+
+<h1>Create a New Conference</h1>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Create Conference</button>
+</form>
+<style>
+    h1 {
+        text-align: center;
+        color: #4f8cff;
+        margin-top: 40px;
+    }
+    form {
+        background: #fff;
+        max-width: 500px;
+        margin: 40px auto;
+        padding: 32px 28px;
+        border-radius: 12px;
+        box-shadow: 0 4px 24px rgba(44,62,80,0.10);
+    }
+    button {
+        background: #4f8cff;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 6px;
+        font-weight: 500;
+        cursor: pointer;
+        box-shadow: 0 2px 8px rgba(44,62,80,0.08);
+        transition: background 0.2s, transform 0.2s;
+    }
+    button:hover {
+        background: #2d3a4b;
+        transform: scale(1.05);
+    }
