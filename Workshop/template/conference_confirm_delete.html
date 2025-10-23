@@ -1,0 +1,27 @@
+<h2>Confirmer la suppression</h2>
+<div class="detail-container">
+    <p>Voulez-vous vraiment supprimer la conférence "{{ object.name }}" ? Cette action est irréversible.</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="delete-confirm">Oui, supprimer</button>
+        <a href="{% url 'conference_liste' %}" class="cancel-link">Annuler</a>
+    </form>
+</div>
+<style>
+.detail-container {
+    background: #fff;
+    max-width: 500px;
+    margin: 40px auto;
+    padding: 24px;
+    border-radius: 12px;
+    box-shadow: 0 4px 24px rgba(44,62,80,0.10);
+}
+.delete-confirm {
+    background: #ff6b6b;
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: none;
+}
+.cancel-link { margin-left: 12px; }
+</style>

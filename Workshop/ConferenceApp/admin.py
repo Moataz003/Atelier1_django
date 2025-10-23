@@ -8,14 +8,14 @@ admin.site.index_title = "Tableau de bord des conférences"
 class SubmissionStackedInline(admin.StackedInline):
     model = Submission
     extra = 0
-    fields = ("title", "abstract", "status", "submission_id", "submission_date")
+    fields = ("submission_id", "title", "abstract", "status", "submission_date")
     readonly_fields = ("submission_id", "submission_date")
 
 # Inline Tabular pour Submission
 class SubmissionTabularInline(admin.TabularInline):
     model = Submission
     extra = 0
-    fields = ("title", "status", "user")
+    fields = ("title", "status")
 
 # Admin Conference
 @admin.register(Conference)
@@ -44,10 +44,10 @@ class ConferenceAdmin(admin.ModelAdmin):
 # Admin Submission
 @admin.register(Submission)
 class SubmissionAdmin(admin.ModelAdmin):
-    list_display = ("title", "status", "user", "conference", "submission_date", "payed", "short_abstract")
-    list_filter = ("status", "payed", "conference", "submission_date")
+    list_display = ("title", "status", "user", "conference", "submission_date", "short_abstract")
+    list_filter = ("status", "conference", "submission_date")
     search_fields = ("title", "keywords", "user__username")
-    list_editable = ("status", "payed")
+    list_editable = ("status",)
     readonly_fields = ("submission_id", "submission_date")
     fieldsets = (
         ("Infos générales", {
@@ -57,20 +57,15 @@ class SubmissionAdmin(admin.ModelAdmin):
             "fields": ("paper", "conference")
         }),
         ("Suivi", {
-            "fields": ("status", "payed", "submission_date", "user")
+            "fields": ("status", "submission_date", "user")
         }),
     )
 
-    actions = ["mark_as_payed", "accept_submissions"]
+    actions = ["accept_submissions"]
 
     def short_abstract(self, obj):
         return (obj.abstract[:50] + "...") if obj.abstract and len(obj.abstract) > 50 else obj.abstract
     short_abstract.short_description = "Résumé court"
-
-    def mark_as_payed(self, request, queryset):
-        updated = queryset.update(payed=True)
-        self.message_user(request, f"{updated} soumissions marquées comme payées.")
-    mark_as_payed.short_description = "Marquer comme payées"
 
     def accept_submissions(self, request, queryset):
         updated = queryset.update(status="accepted")

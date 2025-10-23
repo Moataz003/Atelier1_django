@@ -1,10 +1,13 @@
+{% extends 'base.html'%}
+
+{% block content %}
 <h2 class="fade-in">La liste des conférences</h2>
 <table class="conference-table slide-in">
     <tr>
         <th>Nom</th>
         <th>Date début</th>
         <th>Date fin</th>
-        <th>Détails</th>
+        <th>Actions</th>
     </tr>
     {% for c in liste %}
     <tr class="row-animate">
@@ -13,6 +16,8 @@
         <td>{{ c.end_date }}</td>
         <td>
             <a href="{% url 'conference_detail' c.pk %}" class="details-btn">Voir détails</a>
+            <a href="{% url 'conference_update' c.pk %}" class="details-btn" style="margin-left:8px; background:#3ac66d;">Modifier</a>
+            <a href="{% url 'conference_delete' c.pk %}" class="details-btn delete-btn" style="margin-left:8px; background:#ff6b6b;">Supprimer</a>
         </td>
     </tr>
     {% empty %}
@@ -21,6 +26,7 @@
     </tr>
     {% endfor %}
 </table>
+{% endblock %}
 <style>
 body {
     background: linear-gradient(120deg, #f0f4f8 0%, #e0e7ff 100%);
@@ -116,6 +122,14 @@ window.addEventListener('DOMContentLoaded', () => {
     const rows = document.querySelectorAll('.row-animate');
     rows.forEach((row, i) => {
         row.style.animationDelay = (0.9 + i * 0.12) + 's';
+    });
+    // Confirmation before navigating to delete page
+    const deleteButtons = document.querySelectorAll('.delete-btn');
+    deleteButtons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const ok = confirm('Voulez-vous vraiment supprimer cette conférence ?');
+            if (!ok) e.preventDefault();
+        });
     });
 });
 </script>
