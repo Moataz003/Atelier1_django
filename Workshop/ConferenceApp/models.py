@@ -1,4 +1,5 @@
 from ast import Import
+import uuid
 from django.db import models
 from django.core.validators import MinLengthValidator 
 from django.core.exceptions import ValidationError
@@ -24,8 +25,12 @@ class Conference(models.Model):
 
 
 
+def generate_submission_id():
+    return "SUB" + uuid.uuid4().hex[:8].upper()
+
+
 class Submission(models.Model):
-    submission_id=models.CharField(primary_key=True,max_length=255,unique=True)
+    submission_id=models.CharField(primary_key=True,max_length=255,unique=True, editable=False, default=generate_submission_id)
     user=models.ForeignKey("UserApp.User",on_delete=models.CASCADE,related_name="submissions")
     conference=models.ForeignKey(Conference,on_delete=models.CASCADE,related_name="submissions")
     title=models.CharField(max_length=255)
@@ -38,6 +43,8 @@ class Submission(models.Model):
         ("rejected","rejected")]
 
     status=models.CharField(max_length=255,choices=Choises)
+    # Indicates whether the author has paid the submission fee (if applicable)
+    payed = models.BooleanField(default=False)
     
     submission_date=models.DateTimeField(auto_now_add=True)
     created_at=models.DateTimeField(auto_now_add=True)

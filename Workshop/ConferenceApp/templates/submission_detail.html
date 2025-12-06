@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header">
+            <h2>{{ submission.title }}</h2>
+            <span class="badge {% if submission.status == 'accepted' %}bg-success
+                {% elif submission.status == 'rejected' %}bg-danger
+                {% elif submission.status == 'under review' %}bg-warning
+                {% else %}bg-info{% endif %}">
+                {{ submission.status }}
+            </span>
+        </div>
+        <div class="card-body">
+            <h5>Résumé</h5>
+            <p>{{ submission.abstract }}</p>
+
+            <h5>Mots-clés</h5>
+            <p>{{ submission.keywords }}</p>
+
+            <h5>Informations</h5>
+            <ul class="list-unstyled">
+                <li><strong>Conférence:</strong> {{ submission.conference.name }}</li>
+                <li><strong>Auteur:</strong> {{ submission.user.get_full_name }}</li>
+                <li><strong>Date de soumission:</strong> {{ submission.submission_date|date:"d/m/Y H:i" }}</li>
+                <li><strong>Dernière mise à jour:</strong> {{ submission.updated_at|date:"d/m/Y H:i" }}</li>
+            </ul>
+
+            <div class="mt-4">
+                <a href="?download=true" class="btn btn-primary">
+                    <i class="fas fa-download"></i> Télécharger le PDF
+                </a>
+                
+                {% if can_edit %}
+                    <a href="{% url 'submission_update' pk=submission.pk %}" class="btn btn-warning">
+                        <i class="fas fa-edit"></i> Modifier
+                    </a>
+                {% endif %}
+
+                <a href="{% url 'submission_list' conference_id=submission.conference.pk %}" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Retour à la liste
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

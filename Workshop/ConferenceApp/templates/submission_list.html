@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Soumissions pour {{ submissions.first.conference.name }}</h2>
+    
+    <div class="mb-3">
+        <a href="{% url 'submission_create' conference_id=view.kwargs.conference_id %}" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Nouvelle soumission
+        </a>
+    </div>
+
+    {% if submissions %}
+        <div class="row">
+            {% for submission in submissions %}
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ submission.title }}</h5>
+                            <p class="card-text">{{ submission.abstract|truncatewords:30 }}</p>
+                            <p>
+                                <span class="badge {% if submission.status == 'accepted' %}bg-success
+                                    {% elif submission.status == 'rejected' %}bg-danger
+                                    {% elif submission.status == 'under review' %}bg-warning
+                                    {% else %}bg-info{% endif %}">
+                                    {{ submission.status }}
+                                </span>
+                            </p>
+                            <p class="text-muted">Soumis le: {{ submission.submission_date|date:"d/m/Y" }}</p>
+                            <a href="{% url 'submission_detail' pk=submission.pk %}" class="btn btn-outline-primary">
+                                <i class="fas fa-eye"></i> Voir les détails
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-info">
+            <i class="fas fa-info-circle"></i> Aucune soumission n'a encore été faite pour cette conférence.
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header">
+            <h2>{{ conference.name }}</h2>
+        </div>
+        <div class="card-body">
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <h5>Description</h5>
+                    <p>{{ conference.description }}</p>
+                    
+                    <h5>Thème</h5>
+                    <p>{{ conference.get_theme_display }}</p>
+                </div>
+                <div class="col-md-6">
+                    <h5>Dates</h5>
+                    <ul class="list-unstyled">
+                        <li><strong>Début:</strong> {{ conference.start_date }}</li>
+                        <li><strong>Fin:</strong> {{ conference.end_date }}</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <h3>Soumissions</h3>
+                <a href="{% url 'submission_list' conference_id=conference.pk %}" class="btn btn-primary">
+                    <i class="fas fa-list"></i> Voir toutes les soumissions
+                </a>
+                <a href="{% url 'submission_create' conference_id=conference.pk %}" class="btn btn-success">
+                    <i class="fas fa-plus"></i> Nouvelle soumission
+                </a>
+            </div>
+
+            <div>
+                <a href="{% url 'conference_liste' %}" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Retour à la liste
+                </a>
+                <a href="{% url 'conference_update' pk=conference.pk %}" class="btn btn-warning">
+                    <i class="fas fa-edit"></i> Modifier
+                </a>
+                <a href="{% url 'conference_delete' pk=conference.pk %}" class="btn btn-danger">
+                    <i class="fas fa-trash"></i> Supprimer
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

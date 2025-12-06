@@ -1,4 +1,4 @@
-from urllib import request
+from django.contrib.auth import logout
 from django.shortcuts import redirect, render
 from .forms import CustomUserCreationForm  
 def register(request):
@@ -12,3 +12,8 @@ def register(request):
        form = CustomUserCreationForm()
 
    return render(request, 'C:/Users/brhmi/OneDrive/Bureau/cours_django/Workshop/template/register.html', {'form': form})
+
+
+def logout_view(request):
+    logout(request)
+    return redirect('login')

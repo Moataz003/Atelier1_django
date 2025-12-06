@@ -1,6 +1,4 @@
-{% extends 'base.html'%}
-
-{% block content %}
+<a href="{% url 'logout' %}" class="details-btn" style="float:right; margin:20px;">Logout</a>
 <h2 class="fade-in">La liste des conférences</h2>
 <table class="conference-table slide-in">
     <tr>
@@ -26,7 +24,7 @@
     </tr>
     {% endfor %}
 </table>
-{% endblock %}
+
 <style>
 body {
     background: linear-gradient(120deg, #f0f4f8 0%, #e0e7ff 100%);
