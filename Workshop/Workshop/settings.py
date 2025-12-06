@@ -37,11 +37,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework',
+    'rest_framework', 
+    'rest_framework_simplejwt',
     'UserApp',
     'ConferenceApp',
     'SessionApp',
     'session_app_api',
+    'securityConfigApp',
     
 ]
 
@@ -136,3 +138,26 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL="UserApp.User"
 LOGIN_REDIRECT_URL = "conference_liste"
 LOGOUT_REDIRECT_URL = "login"
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+}
+from datetime import timedelta
+
+SIMPLE_JWT = {
+    'USER_ID_FIELD': 'User_id',   # ← EXACTEMENT comme dans ton modèle
+    'USER_ID_CLAIM': 'User_id',
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
+    'ALGORITHM': 'HS256',
+    'SIGNING_KEY': SECRET_KEY,
+    'AUTH_HEADER_TYPES': ('Bearer',),
+    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
+}
+
+

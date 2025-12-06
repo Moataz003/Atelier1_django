@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2 class="mb-4">
+    {% if view.object %}Modifier la soumission{% else %}Nouvelle soumission{% endif %}
+</h2>
+
+<form method="post" enctype="multipart/form-data" class="card p-4 shadow-sm">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <button type="submit" class="btn btn-success mt-2">Enregistrer</button>
+    <a href="javascript:history.back()" class="btn btn-secondary mt-2">Annuler</a>
+</form>
+
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2 class="mb-4">Détails de la soumission</h2>
+
+<div class="card p-4 shadow-sm">
+
+    <p><strong>Titre :</strong> {{ submission.title }}</p>
+    <p><strong>Auteur :</strong> {{ submission.user.username }}</p>
+    <p><strong>Conférence :</strong> {{ submission.conference.name }}</p>
+    <p><strong>Résumé :</strong> {{ submission.abstract }}</p>
+    <p><strong>Mots-clés :</strong> {{ submission.keywords }}</p>
+    <p><strong>Statut :</strong> <span class="badge bg-primary">{{ submission.status }}</span></p>
+
+    <a href="?download=1" class="btn btn-outline-primary mt-2">Télécharger le PDF</a>
+
+    {% if submission.status == "submitted" and submission.user == request.user %}
+        <a href="{% url 'submission_update' submission.pk %}" class="btn btn-warning mt-2">Modifier</a>
+    {% endif %}
+
+    <a href="{% url 'submission_list' submission.conference.pk %}" class="btn btn-secondary mt-3">Retour</a>
+</div>
+
+{% endblock %}
